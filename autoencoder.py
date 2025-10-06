@@ -23,11 +23,11 @@ class Autoencoder(nn.Module):
         self.encoder = nn.Sequential(
                 nn.Linear(28*28,128),
                 nn.ReLU(),
-                nn.Linear(128, 64)
+                nn.Linear(128, 8)
                 )
 
         self.decoder = nn.Sequential(
-                nn.Linear(64, 128),
+                nn.Linear(8, 128),
                 nn.ReLU(),
                 nn.Linear(128, 28*28),
                 nn.Sigmoid()
