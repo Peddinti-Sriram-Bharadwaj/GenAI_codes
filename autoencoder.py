@@ -72,9 +72,14 @@ num_epochs = 10
 for epoch in range(num_epochs):
     for data in train_loader:
         images, _ = data
-        images = images.view(images.size(0), -1).to(device)
-        outputs = model(images)
-        loss = criterion(outputs, images)
+        images = images.view(images.size(0), -1)
+
+        noise_factor = 0.5
+        noisy_images = images + noise_factor * torch.randn(*images.shape)
+        noisy_images = torch.clamp(noisy_images, 0., 1.).to(device)
+
+        outputs = model(noisy_images)
+        loss = criterion(outputs, images.to(device))
 
         optimizer.zero_grad()
         loss.backward()
